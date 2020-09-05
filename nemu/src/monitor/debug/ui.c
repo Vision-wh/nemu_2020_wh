@@ -86,7 +86,7 @@ static int cmd_p(char *args) {
 	bool flag;
 	n = expr(args,&flag);
 	if(flag){
-		printf("The result is:\n0x%x(16)\t%d(10)\n", n, n);
+		printf("The result is:\n0x%x (hex)\t%d (dec)\n", n, n);
 	}
 	else
 		assert(0);
