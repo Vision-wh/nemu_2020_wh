@@ -59,6 +59,27 @@ static int cmd_info(char *args) {
 	return 0;
 }
 
+static int cmd_x(char *args) {
+	int n;
+	uint32_t start_address;
+	if(args != NULL) {
+		char *arg = strtok(args, " ");
+		sscanf(arg,"%d",&n);
+		char *arg2 = strtok(NULL, " ");
+		sscanf(arg2, "%08x", &start_address);
+		int i;
+		for(i=1;i<=n;i++){
+			printf("0x%08x:\t", start_address);
+			printf("0x%08x", swaddr_read(start_address, 4));
+			start_address += 4;
+			printf("\n");
+		}
+		return 0;
+	}
+	else
+		assert(0);
+		return 0;
+}
 
 static struct {
 	char *name;
@@ -70,6 +91,7 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "Exec the program 1 by 1 step", cmd_si},
 	{ "info", "Get the info by the instruction", cmd_info},
+	{ "x", "Scan the mem", cmd_x},
 	/* TODO: Add more commands */
 
 };
