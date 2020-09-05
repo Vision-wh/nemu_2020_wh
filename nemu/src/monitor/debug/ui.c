@@ -86,7 +86,7 @@ static int cmd_p(char *args) {
 	bool flag;
 	n = expr(args,&flag);
 	if(flag){
-		printf("0x%x:\t%d\n", n, n);
+		printf("The result is:\t0x%x\n", n);
 	}
 	else
 		assert(0);
