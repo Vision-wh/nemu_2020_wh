@@ -81,6 +81,19 @@ static int cmd_x(char *args) {
 		return 0;
 }
 
+static int cmd_p(char *args) {
+	uint32_t n;
+	bool flag;
+	n = expr(args,&flag);
+	if(flag){
+		printf("0x%x:\t%d\n", n, n);
+	}
+	else
+		assert(0);
+	return 0;
+	
+}
+
 static struct {
 	char *name;
 	char *description;
@@ -92,6 +105,7 @@ static struct {
 	{ "si", "Exec the program 1 by 1 step", cmd_si},
 	{ "info", "Get the info by the instruction", cmd_info},
 	{ "x", "Scan the mem", cmd_x},
+	{ "p", "Compute the expr's value", cmd_p},
 	/* TODO: Add more commands */
 
 };
