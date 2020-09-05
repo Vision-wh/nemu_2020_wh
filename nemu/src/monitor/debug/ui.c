@@ -66,7 +66,7 @@ static int cmd_x(char *args) {
 		char *arg = strtok(args, " ");
 		sscanf(arg,"%d",&n);
 		char *arg2 = strtok(NULL, " ");
-		sscanf(arg2, "%08x", &start_address);
+		sscanf(arg2, "%x", &start_address);
 		int i;
 		for(i=1;i<=n;i++){
 			printf("0x%08x:\t", start_address);
