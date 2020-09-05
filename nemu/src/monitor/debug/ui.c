@@ -61,12 +61,15 @@ static int cmd_info(char *args) {
 
 static int cmd_x(char *args) {
 	int n;
-	uint32_t start_address;
+	swaddr_t start_address;
+	bool success;
 	if(args != NULL) {
 		char *arg = strtok(args, " ");
 		sscanf(arg,"%d",&n);
-		char *arg2 = strtok(NULL, " ");
-		sscanf(arg2, "%x", &start_address);
+		args = arg + strlen(arg) + 1;
+		start_address = expr(args, &success);
+		if(!success)assert(1);
+		current_sreg = R_DS;
 		int i;
 		for(i=1;i<=n;i++){
 			printf("0x%08x:\t", start_address);
