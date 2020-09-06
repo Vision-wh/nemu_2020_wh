@@ -147,7 +147,7 @@ int dominant_operator (int l,int r)
 {
 	int i,j;
 	int min_priority = 10;
-	int oper = l;
+	int dopos = l;
 	for (i = l; i <= r;i ++)
 	{
 		if (tokens[i].type == NUMBER || tokens[i].type == HNUMBER || tokens[i].type == REGISTER || tokens[i].type == MARK)
@@ -161,9 +161,9 @@ int dominant_operator (int l,int r)
 			if (tokens[j].type == ')')cnt ++; 
 		}
 		if (!key)continue;
-		if (tokens[i].priority <= min_priority){min_priority = tokens[i].priority;oper = i;}
+		if (tokens[i].priority <= min_priority){min_priority = tokens[i].priority;dopos = i;}
  	}
-	return oper;
+	return dopos;
 }
 
 uint32_t eval(int l,int r) {
@@ -225,11 +225,9 @@ uint32_t eval(int l,int r) {
 	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
  	else {
 		int op = dominant_operator (l,r);
-//		printf ("op = %d\n",op);
  		if (l == op || tokens [op].type == POINTOR || tokens [op].type == MINUS || tokens [op].type == '!')
 		{
 			uint32_t val = eval (l + 1,r);
-//			printf ("val = %d\n",val);
 			switch (tokens[l].type)
  			{
 				case POINTOR:current_sreg = R_DS;return swaddr_read (val,4);
@@ -241,7 +239,6 @@ uint32_t eval(int l,int r) {
 
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
-//		printf ("1 = %d,2 = %d\n",val1,val2);
 		switch (tokens[op].type)
 		{
 			case '+':return val1 + val2;
@@ -257,7 +254,7 @@ uint32_t eval(int l,int r) {
   		}
   	}
 	assert (1);
-	return -123456;
+	return -666666;
 }
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
