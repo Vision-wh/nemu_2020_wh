@@ -97,6 +97,19 @@ static int cmd_p(char *args) {
 	
 }
 
+static int cmd_w(char *args){
+	WP *f;
+	bool success;
+	f = new_wp();
+	printf("Watchpoint %d: %s\n",f->NO,args);
+	f->val = expr(args,&success);
+	strcpy(f->expr,args);
+	if(!success)Assert(1,"wrong\n");
+	printf("Value: %d\n",f->val);
+	return 0;
+}	
+
+
 static struct {
 	char *name;
 	char *description;
@@ -109,6 +122,7 @@ static struct {
 	{ "info", "Get the info by the instruction", cmd_info},
 	{ "x", "Scan the mem", cmd_x},
 	{ "p", "Compute the expr's value", cmd_p},
+	{ "w", "stop the execution of the program if the result of the expression has changed", cmd_w},
 	/* TODO: Add more commands */
 
 };
