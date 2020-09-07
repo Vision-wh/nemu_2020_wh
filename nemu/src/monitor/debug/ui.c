@@ -108,6 +108,12 @@ static int cmd_w(char *args){
 	return 0;
 }	
 
+static int cmd_d(char *args){
+	int n;
+	sscanf(args,"%d",&n);
+	delete_wp(n);
+	return 0;
+}
 
 static struct {
 	char *name;
@@ -122,6 +128,7 @@ static struct {
 	{ "x", "Scan the mem", cmd_x},
 	{ "p", "Compute the expr's value", cmd_p},
 	{ "w", "stop the execution of the program if the result of the expression has changed", cmd_w},
+	{ "d", "delete the watchpoint", cmd_d},
 	/* TODO: Add more commands */
 
 };
