@@ -102,10 +102,9 @@ static int cmd_w(char *args){
 	bool success;
 	f = new_wp();
 	f->val = expr(args,&success);
-	printf("Watchpoint %d: %s ,the value is: %d\n",f->NO,args,f->val);
+	printf("Watchpoint %d: %s ,and the value is: %d (dec).\n",f->NO,args,f->val);
 	strcpy(f->expr,args);
 	if(!success)Assert(1,"wrong\n");
-	printf("Value: %d\n",f->val);
 	return 0;
 }	
 
