@@ -55,6 +55,9 @@ static int cmd_info(char *args) {
 			printf("%s\t0x%08x\n",regsl[i],reg_l(i));
 		}
 	}
+	else if(args[0] == 'w'){
+		info_wp();
+	}
 	else assert(0);
 	return 0;
 }
