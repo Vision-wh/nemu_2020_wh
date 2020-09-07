@@ -101,8 +101,8 @@ static int cmd_w(char *args){
 	WP *f;
 	bool success;
 	f = new_wp();
-	printf("Watchpoint %d: %s\n",f->NO,args);
 	f->val = expr(args,&success);
+	printf("Watchpoint %d: %s ,the value is: %d\n",f->NO,args,f->val);
 	strcpy(f->expr,args);
 	if(!success)Assert(1,"wrong\n");
 	printf("Value: %d\n",f->val);
