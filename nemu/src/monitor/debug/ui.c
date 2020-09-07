@@ -89,7 +89,7 @@ static int cmd_p(char *args) {
 	bool flag;
 	n = expr(args,&flag);
 	if(flag){
-		printf("The result is:\n0x%x (hex)\t%d (dec)\n", n, n);
+		printf("The result is:\n0x%x (HEX)\t%d (DEC)\n", n, n);
 	}
 	else
 		assert(0);
@@ -102,7 +102,7 @@ static int cmd_w(char *args){
 	bool success;
 	f = new_wp();
 	f->val = expr(args,&success);
-	printf("Watchpoint %d: %s ,and the value is: %d (dec).\n",f->NO,args,f->val);
+	printf("Watchpoint %d: %s ,and the value is: %d (DEC).\n",f->NO,args,f->val);
 	strcpy(f->expr,args);
 	if(!success)Assert(1,"wrong\n");
 	return 0;
