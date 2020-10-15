@@ -34,4 +34,3 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 #endif
 	lnaddr_write(addr, len, data);
 }
-
