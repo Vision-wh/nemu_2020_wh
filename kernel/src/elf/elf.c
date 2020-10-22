@@ -3,6 +3,10 @@
 #include <string.h>
 #include <elf.h>
 
+void video_mapping_write_test();
+void video_mapping_read_test();
+void video_mapping_clear();
+
 #define ELF_OFFSET_IN_DISK 0
 
 #ifdef HAS_DEVICE
@@ -18,7 +22,7 @@ uint32_t get_ucr3();
 
 uint32_t loader() {
 	Elf32_Ehdr *elf;
-	Elf32_Phdr *ph = NULL, *eph;
+	Elf32_Phdr *ph = NULL;
 
 	uint8_t buf[4096];
 
@@ -37,21 +41,25 @@ uint32_t loader() {
 
 	/* Load each program segment */
 	//panic("please implement me");
-	for(ph = (void *)buf + elf->e_phoff, eph = ph + elf->e_phnum; ph < eph; ph ++) {
+	int i = 0;
+	ph = (void *)(buf + elf->e_phoff);
+	
+	for(; i < elf->e_phnum; i++, ph++) {
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
-
-                        uint32_t pa = ph->p_vaddr;
-
+			
+                        ph->p_vaddr = mm_malloc(ph->p_vaddr, ph->p_memsz);
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			ramdisk_read((void *)pa, ELF_OFFSET_IN_DISK + ph->p_offset, ph->p_filesz); 
+			//set_bp();
+			ramdisk_read((void *)ph->p_vaddr, ph->p_offset, ph->p_filesz);
 			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-                        memset((void *)pa + ph->p_filesz, 0, ph->p_memsz - ph->p_filesz);
+			memset((void *)(ph->p_vaddr + ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
+			
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
@@ -61,7 +69,7 @@ uint32_t loader() {
 #endif
 		}
 	}
-
+	
 	volatile uint32_t entry = elf->e_entry;
 
 #ifdef IA32_PAGE
@@ -74,5 +82,10 @@ uint32_t loader() {
 	write_cr3(get_ucr3());
 #endif
 
+	/*test vmem*/
+	void video_mapping_write_test();
+	void video_mapping_read_test();
+	void video_mapping_clear();
+	/*all the vmem function should be tested at the same time*/
 	return entry;
 }

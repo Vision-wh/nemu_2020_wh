@@ -13,3 +13,6 @@
 
 
 make_helper_v(adc_r2rm)
+make_helper_v(adc_rm2r)
+make_helper_v(adc_i2rm)
+make_helper_v(adc_si2rm)

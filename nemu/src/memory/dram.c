@@ -50,7 +50,8 @@ void init_ddr3() {
 		}
 	}
 }
-void ddr3_read(hwaddr_t addr, void *data) {
+
+static void ddr3_read(hwaddr_t addr, void *data) {
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	dram_addr temp;
@@ -71,7 +72,7 @@ void ddr3_read(hwaddr_t addr, void *data) {
 	memcpy(data, rowbufs[rank][bank].buf + col, BURST_LEN);
 }
 
-void ddr3_write(hwaddr_t addr, void *data, uint8_t *mask) {
+static void ddr3_write(hwaddr_t addr, void *data, uint8_t *mask) {
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	dram_addr temp;
@@ -125,3 +126,13 @@ void dram_write(hwaddr_t addr, size_t len, uint32_t data) {
 		ddr3_write(addr + BURST_LEN, temp + BURST_LEN, mask + BURST_LEN);
 	}
 }
+
+/*To use static ddr3 function in cache.c*/
+void ddr3_read_public(hwaddr_t addr, void *data) {
+	ddr3_read(addr, data);
+}
+
+void ddr3_write_public(hwaddr_t addr, void *data, uint8_t *mask) {
+	ddr3_write(addr, data, mask);
+}
+

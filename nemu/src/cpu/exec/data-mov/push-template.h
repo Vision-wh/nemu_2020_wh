@@ -3,7 +3,7 @@
 #define instr push
 
 static void do_execute() {
-	swaddr_write(cpu.esp - 4, 4, op_src->val, R_SS);
+	swaddr_write(cpu.esp - 4, 4, op_src->val,R_SS);
 	cpu.esp -= 4;
 	print_asm_template1();
 }
@@ -12,7 +12,7 @@ static void do_execute() {
 make_instr_helper(r)
 make_instr_helper(rm)
 #endif
-
+make_instr_helper(i)
 #if DATA_BYTE == 1
 make_instr_helper(si)
 #endif
